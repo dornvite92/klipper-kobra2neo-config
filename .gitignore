@@ -1,6 +1,12 @@
 # Ignoruj pliki tymczasowe i sekrety
 *.bak
 *.backup-*
+*.backup_*
 .moonraker.conf.bkp
 *.swp
 *.tmp
+
+# Automatyczne backupy Klippera (Mainsail tworzy przy SAVE_CONFIG)
+printer-[0-9]*.cfg
+printer.cfg_working_*.cfg
+backups/
