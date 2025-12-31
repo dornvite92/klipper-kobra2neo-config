@@ -1,0 +1,6 @@
+# Ignoruj pliki tymczasowe i sekrety
+*.bak
+*.backup-*
+.moonraker.conf.bkp
+*.swp
+*.tmp
