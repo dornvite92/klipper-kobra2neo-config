@@ -1,0 +1,119 @@
+# =============================================================================
+# USTAWIENIA ORCASLICER DLA ANYCUBIC KOBRA 2 NEO (KLIPPER)
+# =============================================================================
+# Data: 2025-01-01
+# Autor: Claude Code
+# =============================================================================
+
+# INSTRUKCJA:
+# 1. OrcaSlicer → Printer Settings → wybierz swoją drukarkę
+# 2. Skopiuj odpowiednie sekcje poniżej do odpowiednich pól
+# 3. Zapisz jako nowy profil drukarki
+
+# =============================================================================
+# MACHINE START G-CODE
+# =============================================================================
+# Lokalizacja: Printer Settings → Machine G-code → Machine start G-code
+# WAŻNE: Usuń WSZYSTKIE istniejące M104/M109/M140/M190 - makro obsłuży temperatury!
+
+START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} MATERIAL={filament_type[0]}
+
+# =============================================================================
+# MACHINE END G-CODE
+# =============================================================================
+# Lokalizacja: Printer Settings → Machine G-code → Machine end G-code
+
+END_PRINT
+
+# =============================================================================
+# BEFORE LAYER CHANGE G-CODE (OPCJONALNE)
+# =============================================================================
+# Lokalizacja: Printer Settings → Machine G-code → Before layer change G-code
+# Usuwa "blob" przy zmianie warstwy
+
+;BEFORE_LAYER_CHANGE
+;[layer_z]
+G92 E0
+
+# =============================================================================
+# LAYER CHANGE G-CODE (OPCJONALNE - DLA TIMELAPSE)
+# =============================================================================
+# Lokalizacja: Printer Settings → Machine G-code → Layer change G-code
+# Odkomentuj jeśli używasz timelapse przez Moonraker
+
+;AFTER_LAYER_CHANGE
+;[layer_z]
+; TIMELAPSE_TAKE_FRAME
+
+# =============================================================================
+# PAUSE G-CODE
+# =============================================================================
+# Lokalizacja: Printer Settings → Machine G-code → Pause G-code
+
+PAUSE
+
+# =============================================================================
+# CHANGE FILAMENT G-CODE
+# =============================================================================
+# Lokalizacja: Printer Settings → Machine G-code → Change filament G-code
+
+M600
+
+# =============================================================================
+# WYŁĄCZ WBUDOWANE KOMENDY TEMPERATUR W ORCASLICER
+# =============================================================================
+# KRYTYCZNE: Te opcje muszą być WYŁĄCZONE aby makra miały pierwszeństwo!
+#
+# Printer Settings → Machine G-code:
+#   [ ] "Emit temperature commands automatically" - ODZNACZ!
+#
+# Jeśli tej opcji nie ma, upewnij się że w Start G-code NIE MA:
+#   - M104 S... (grzanie dyszy)
+#   - M109 S... (czekanie na dyszę)
+#   - M140 S... (grzanie stołu)
+#   - M190 S... (czekanie na stół)
+#
+# Te komendy SĄ obsługiwane przez makro START_PRINT!
+
+# =============================================================================
+# ZALECANE USTAWIENIA FILAMENTÓW W ORCASLICER
+# =============================================================================
+
+# --- PLA ---
+# Filament Settings → Filament → Type: PLA
+# Nozzle: 200-210°C | Bed: 60°C | Fan: 100% od warstwy 2
+
+# --- PETG ---
+# Filament Settings → Filament → Type: PETG
+# Nozzle: 235-245°C | Bed: 80°C | Fan: 30-50% od warstwy 3
+
+# --- TPU ---
+# Filament Settings → Filament → Type: TPU
+# Nozzle: 220-230°C | Bed: 50°C | Fan: 0-30%
+
+# --- ABS ---
+# Filament Settings → Filament → Type: ABS
+# Nozzle: 245-255°C | Bed: 100°C | Fan: 0% (lub 10-20% dla mostów)
+
+# --- ASA ---
+# Filament Settings → Filament → Type: ASA
+# Nozzle: 250-260°C | Bed: 100°C | Fan: 0% (lub 10-20% dla mostów)
+
+# =============================================================================
+# OPCJA: POMINIĘCIE PAUZY NA ADHEZJĘ
+# =============================================================================
+# Jeśli nie chcesz pauzy przed drukiem (nakładanie kleju), dodaj SKIP_PAUSE=1:
+
+START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} MATERIAL={filament_type[0]} SKIP_PAUSE=1
+
+# =============================================================================
+# WERYFIKACJA
+# =============================================================================
+# Po zapisaniu profilu, wyślij testowy druk i sprawdź w konsoli Mainsail:
+# - "START_PRINT używa profilu: ..."
+# - "Temperatury ze slicera: Dysza XXX°C | Stół YY°C"
+# - Brak błędów związanych z temperaturami
+
+# =============================================================================
+# KONIEC PLIKU
+# =============================================================================
